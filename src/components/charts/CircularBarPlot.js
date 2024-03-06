@@ -1,21 +1,15 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
-const CircularBarPlot = ({ selectedCountry }) => {
-    console.log(selectedCountry);
+const CircularBarPlot = ({ selectedCountry, data }) => {
+
     const chartRef = useRef();
 
-    const fetchDataFromAPI = async () => {
-        const response = await fetch('http://localhost:5000/filterData?country=');
-        if (!response.ok) {
-            throw new Error('Failed to fetch data');
-        }
-        const data = await response.json();
-        // Filter out null country values
-        return data.filter(item => item.country !== null);
-    };
+    useEffect(() => {
+        drawChart(data);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data, selectedCountry]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     const drawChart = (data) => {
         d3.select(chartRef.current).selectAll("*").remove();
         // Count occurrences of each country
@@ -83,16 +77,6 @@ const CircularBarPlot = ({ selectedCountry }) => {
             .style('top', 0) // Set initial top position to 0
             .style('left', 0);
     };
-
-    useEffect(() => {
-        fetchDataFromAPI()
-            .then(data => {
-                drawChart(data);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-    }, [drawChart, selectedCountry]);
 
     return (
         <div ref={chartRef}></div>

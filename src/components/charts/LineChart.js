@@ -69,7 +69,7 @@ const LineGraph = () => {
                 d3.select(this)
                     .style('opacity', 1);
 
-                // Show tooltip
+                // Show tooltiptoo
                 tooltip.transition()
                     .duration(200)
                     .style('opacity', .9);
@@ -97,8 +97,8 @@ const LineGraph = () => {
             .style('border', '1px solid #ddd')
             .style('border-radius', '5px')
             .style('padding', '10px')
-            .style('top', 0) // Set initial top position to 0
-            .style('left', 0); // Set initial left position to 0
+            .style('top', 0)
+            .style('left', 0);
     };
 
     return <div ref={chartRef}></div>;

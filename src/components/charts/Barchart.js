@@ -1,40 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
-const BarChart = ({ sector, topic }) => {
+const BarChart = ({ sector, topic, data }) => {
     const chartRef = useRef();
-    const [data, setData] = useState(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                let url = 'http://localhost:5000/filterData?';
-                if (sector) {
-                    url += `sector=${encodeURIComponent(sector)}`;
-                }
-                if (topic) {
-                    url += `&topic=${encodeURIComponent(topic)}`;
-                }
-
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const jsonData = await response.json();
-                setData(jsonData);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
-        fetchData();
-    }, [sector, topic]);
 
 
     useEffect(() => {
         if (!data) return;
 
         drawChart();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data, sector, topic]);
 
     const drawChart = () => {
@@ -49,6 +25,7 @@ const BarChart = ({ sector, topic }) => {
             highlightIndex = data.findIndex(item => item.topic === topic);
         } else if (sector && topic) {
             // Show both sector and topic
+            // eslint-disable-next-line no-unused-vars
             highlightIndex = data.findIndex(item => item.sector === sector && item.topic === topic);
         }
 
@@ -90,6 +67,7 @@ const BarChart = ({ sector, topic }) => {
             .call(d3.axisLeft(y));
 
         // Add bars to the chart
+        // eslint-disable-next-line no-unused-vars
         const bars = svg.selectAll(".bar")
             .data(data)
             .enter().append("rect")

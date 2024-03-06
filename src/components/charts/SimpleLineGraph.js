@@ -1,27 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
-const SimpleLineGraph = () => {
+const SimpleLineGraph = ({ data }) => {
     const chartRef = useRef();
-    const [data, setData] = useState([]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('http://localhost:5000/filterData?intensity=');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const jsonData = await response.json();
-                setData(jsonData);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
-        fetchData();
-    }, []);
-
     useEffect(() => {
         d3.select(chartRef.current).selectAll("*").remove();
         const margin = { top: 0.5, right: 20, bottom: 20, left: 20 };
