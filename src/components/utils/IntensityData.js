@@ -1,4 +1,4 @@
-import { Box, IconButton, Menu, MenuItem, CircularProgress } from '@mui/material'
+import { Box, CircularProgress, IconButton, Menu, MenuItem } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SimpleLineGraph from '../charts/SimpleLineGraph'
@@ -7,7 +7,7 @@ const IntensityData = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [data, setData] = useState([]);
     const [intensityOccurrences, setIntensityOccurrences] = useState({});
-    const [maxCount, setMaxCount] = useState(0);
+    const [maxCount, setMaxCount] = useState(0); // State to hold the maximum count
     const [isLoading, setIsLoading] = useState(true);
     const open = Boolean(anchorEl);
 
@@ -18,35 +18,39 @@ const IntensityData = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
-
     const API = "https://admindashboard-backend-2.onrender.com";
-
     useEffect(() => {
+        setIsLoading(true);
         const fetchData = async () => {
-            setIsLoading(true); // Set loading to true when fetching data
             try {
                 const response = await fetch(`${API}/filterData?intensity=`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');
                 }
                 const jsonData = await response.json();
+
+                // Filter out null intensity values
                 const filteredData = jsonData.filter(item => item.intensity !== null);
+
                 setData(filteredData);
 
+                // Calculate intensity occurrences
                 const intensityCount = filteredData.reduce((acc, curr) => {
                     const intensity = curr.intensity;
                     acc[intensity] = (acc[intensity] || 0) + 1;
                     return acc;
                 }, {});
+
                 setIntensityOccurrences(intensityCount);
 
+                // Calculate maximum count
                 const counts = Object.values(intensityCount);
                 const max = Math.max(...counts);
                 setMaxCount(max);
             } catch (error) {
                 console.error('Error fetching data:', error);
             } finally {
-                setIsLoading(false); // Set loading to false after fetching data
+                setIsLoading(false);
             }
         };
 
@@ -79,11 +83,15 @@ const IntensityData = () => {
                         anchorEl={anchorEl}
                         open={open}
                         onClose={handleClose}
+
                     >
+
                         <MenuItem key="1" onClick={handleClose}>View</MenuItem>
                         <MenuItem key="2" onClick={handleClose}>Link</MenuItem>
                         <MenuItem key="3" onClick={handleClose}>View</MenuItem>
+
                     </Menu>
+
                 </div>
             </div>
             {isLoading ? (
@@ -97,7 +105,7 @@ const IntensityData = () => {
                             <h1 className='text-left text-gray-600 font-extrabold text-[2rem] m-2'>1k</h1>
                             <h6 className='text-center text-gray-500 lg:text-sm sm:text-xs'>You informed about the intensity of the datas</h6>
                         </div>
-                        <div className='h-full w-[20rem] mb-2 overflow-x-auto overflow-y-hidden lg:w-[29rem] scrollbar-thin'>
+                        <div className='h-full w-[20rem] mb-2 overflow-x-auto overflow-y-hidden lg:w-[29rem] scroll'>
                             <SimpleLineGraph data={data} />
                         </div>
                     </div>
@@ -121,10 +129,12 @@ const IntensityData = () => {
                             </div>
                         ))}
                     </div>
+
                 </>
-            )}
+            )
+            }
+
         </>
     )
 }
-
 export default IntensityData;
