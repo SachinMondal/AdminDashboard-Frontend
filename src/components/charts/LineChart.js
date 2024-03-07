@@ -8,10 +8,10 @@ const LineGraph = () => {
     useEffect(() => {
         fetchData();
     }, []);
-
+    const API = "https://admindashboard-backend-2.onrender.com";
     const fetchData = async () => {
         try {
-            const response = await fetch('http://localhost:5000/filterData?rel=');
+            const response = await fetch(`${API}/filterData?rel=`);
             if (!response) {
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');

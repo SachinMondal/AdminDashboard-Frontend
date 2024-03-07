@@ -19,11 +19,11 @@ const CountryData = () => {
         setAnchorEl(null);
     };
 
-
+    const API = "https://admindashboard-backend-2.onrender.com";
 
     const fetchDataFromAPI = async () => {
         try {
-            const response = await fetch('http://localhost:5000/filterData?country=');
+            const response = await fetch(`${API}/filterData?country=`);
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
             }

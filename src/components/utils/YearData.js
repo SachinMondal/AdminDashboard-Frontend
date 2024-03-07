@@ -10,10 +10,11 @@ const YearData = () => {
     const [selectedYear, setSelectedYear] = useState('');
     const [loading, setLoading] = useState(true);
     const open = Boolean(anchorEl);
+    const API = "https://admindashboard-backend-2.onrender.com";
 
     const fetchData = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/filterData?startYear=`);
+            const response = await fetch(`${API}/filterData?startYear=`);
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
             }

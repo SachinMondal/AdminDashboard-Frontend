@@ -9,12 +9,12 @@ const RegionData = () => {
     const [topicsBySector, setTopicsBySector] = useState({});
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
-
+    const API = "https://admindashboard-backend-2.onrender.com";
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true); // Set loading to true when fetching data
             try {
-                const url = 'http://localhost:5000/filterData?';
+                const url = `${API}/filterData?`;
                 const params = [];
                 if (selectedSector) {
                     params.push(`sector=${encodeURIComponent(selectedSector)}`);

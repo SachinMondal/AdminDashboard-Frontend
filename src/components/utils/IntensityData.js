@@ -17,11 +17,11 @@ const IntensityData = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
-
+    const API = "https://admindashboard-backend-2.onrender.com";
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:5000/filterData?intensity=');
+                const response = await fetch(`${API}/filterData?intensity=`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');
                 }
