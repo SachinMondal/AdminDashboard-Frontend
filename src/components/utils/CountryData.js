@@ -44,7 +44,7 @@ const CountryData = () => {
     }, []);
 
     return (
-        <div className='flex border border-gray-500 h-[50rem] w-full lg:m-3 rounded-lg flex-wrap lg:h-[30rem] '>
+        <div className='flex border border-gray-500 h-[52rem] w-full lg:m-3 rounded-lg flex-wrap lg:h-[30rem] '>
             <div className='h-[2rem] w-full flex m-2 justify-between items-center'>
                 <div>
                     <h2 className='text-gray-500 text-xl font-semibold text-left'>Country Tracker</h2>
