@@ -46,7 +46,7 @@ const Main = () => {
 
 
 
-                <div className='flex border border-gray-500 h-[44rem] lg:h-[26rem] w-full rounded-lg flex-wrap mt-2 mb-2 lg:w-1/2 lg:m-3' >
+                <div className='flex border border-gray-500 h-[48rem] lg:h-[26rem] w-full rounded-lg flex-wrap mt-2 mb-2 lg:w-1/2 lg:m-3' >
                     <YearData />
                 </div>
 

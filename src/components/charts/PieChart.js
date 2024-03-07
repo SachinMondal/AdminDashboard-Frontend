@@ -47,6 +47,12 @@ const PieChart = ({ selectedYear, yearData }) => {
             .innerRadius(0)
             .outerRadius(radius);
 
+        // Add tooltip
+        const tooltip = d3.select(chartRef.current)
+            .append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
         // Draw the original pie chart
         svg.selectAll('path')
             .data(arcs)
@@ -56,12 +62,30 @@ const PieChart = ({ selectedYear, yearData }) => {
             .attr('fill', (d, i) => color(i))
             .attr('stroke', 'white')
             .style('stroke-width', '2px')
-            .style('opacity', d => selectedYear ? (d.data.label === selectedYear ? 1 : 0.5) : 1); // Adjust opacity based on selectedYear
+            .style('opacity', d => selectedYear ? (d.data.label === selectedYear ? 1 : 0.5) : 1) // Adjust opacity based on selectedYear
+            // Add tooltip interaction
+            .on("mouseover", function (event, d) {
+                tooltip.transition()
+                    .duration(200)
+                    .style("opacity", .9);
+                tooltip.html(`<strong>${d.data.label}: ${d.data.value}</strong>`)
+                    .style("left", (event.pageX) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+            })
+            .on("mousemove", function (event, d) {
+                tooltip.style("left", (event.pageX) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+            })
+            .on("mouseout", function (d) {
+                tooltip.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            });
 
         // Highlight the selected year by cutting out its section
         if (selectedYear) {
             const highlightArc = d3.arc()
-                .innerRadius(radius) // Adjust the inner radius to create a cut-out effect
+                .innerRadius(radius)
                 .outerRadius(radius)
                 .cornerRadius(10); // Add corner radius for a smoother cut-out
 
@@ -73,9 +97,6 @@ const PieChart = ({ selectedYear, yearData }) => {
                 .attr('pointer-events', 'none'); // Disable pointer events to allow interaction with underlying chart
         }
     };
-
-
-
 
     return (
         <div ref={chartRef}></div>
