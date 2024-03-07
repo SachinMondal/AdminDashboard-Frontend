@@ -1,7 +1,32 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import CasesOutlinedIcon from '@mui/icons-material/CasesOutlined';
 import LineChart from '../charts/LineChart';
+import { CircularProgress } from '@mui/material';
+
 const RelevanceData = () => {
+    const [loading, setLoading] = useState(true); // New state for loading indicator
+    const [data, setData] = useState([]); // State to hold the fetched data
+    const API = "https://admindashboard-backend-2.onrender.com";
+
+    const fetchData = async () => {
+        try {
+            const response = await fetch(`${API}/filterData?rel=`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch data');
+            }
+            const jsonData = await response.json();
+            setData(jsonData);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
     return (
         <>
             <div className=' w-full h-[5rem] ms-6 mt-6 rounded-lg '>
@@ -12,13 +37,18 @@ const RelevanceData = () => {
                     <h1 className='text-left text-gray-800 font-bold text-xl'>1k</h1>
                     <h5 className='text-sm text-gray-400'>Relevance</h5>
                 </div>
-
             </div>
             <div className='h-[6rem] w-full m-3 overflow-y-hidden overflow-x-auto'>
-                <LineChart />
+                {loading ? (
+                    <div className="flex justify-center items-center w-full h-full">
+                        <CircularProgress />
+                    </div>
+                ) : (
+                    <LineChart data={data} />
+                )}
             </div>
         </>
-    )
-}
+    );
+};
 
-export default RelevanceData
+export default RelevanceData;

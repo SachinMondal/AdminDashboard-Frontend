@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IconButton, Menu, MenuItem } from '@mui/material';
+import { CircularProgress, IconButton, Menu, MenuItem } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import PieChart from '../charts/PieChart';
 import SectorCheckbox from './CheckBox';
@@ -25,6 +25,7 @@ const YearData = () => {
             setLoading(false);
         } catch (error) {
             console.error('Error fetching data:', error);
+            setLoading(false);
         }
     };
 
@@ -91,7 +92,6 @@ const YearData = () => {
                         }}
                         getContentAnchorEl={null}
                         elevation={0}
-
                     >
                         <MenuItem key="1" onClick={handleClose}>View</MenuItem>
                         <MenuItem key="2" onClick={handleClose}>Link</MenuItem>
@@ -100,7 +100,9 @@ const YearData = () => {
                 </div>
             </div>
             {loading ? (
-                <div className='flex justify-center items-center'>Loading...</div>
+                <div className="flex justify-center items-center w-full h-full">
+                    <CircularProgress />
+                </div>
             ) : (
                 <div className='flex flex-col md:flex-row'>
                     <div className='w-full md:w-1/3 h-[20rem] overflow-x-hidden overflow-y-auto m-3'>

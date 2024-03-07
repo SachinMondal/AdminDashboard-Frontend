@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import BarChart from '../charts/Barchart';
 import SectorCheckbox from './CheckBox';
+import { CircularProgress } from '@mui/material';
 
 const RegionData = () => {
     const [selectedSector, setSelectedSector] = useState('');
@@ -10,6 +11,7 @@ const RegionData = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const API = "https://admindashboard-backend-2.onrender.com";
+
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true); // Set loading to true when fetching data
@@ -33,7 +35,7 @@ const RegionData = () => {
             } catch (error) {
                 console.error('Error fetching data:', error);
             } finally {
-                setLoading(false);
+                setLoading(false); // Set loading to false after fetching data
             }
         };
 
@@ -41,10 +43,8 @@ const RegionData = () => {
     }, [selectedSector, selectedTopic]);
 
     useEffect(() => {
-
         const uniqueSectors = [...new Set(data.map(item => item.sector))].filter(sector => sector !== null);
         setSectors(uniqueSectors);
-
 
         const topics = {};
         uniqueSectors.forEach(sector => {
@@ -116,11 +116,15 @@ const RegionData = () => {
                 </div>
             </div>
             <div className='mt-[22rem] lg:mt-0 w-full overflow-x-auto'>
-
-                <BarChart sector={selectedSector} topic={selectedTopic} data={data} />
+                {loading ? (
+                    <div className="flex justify-center items-center w-full h-full">
+                        <CircularProgress />
+                    </div>
+                ) : (
+                    <BarChart sector={selectedSector} topic={selectedTopic} data={data} />
+                )}
             </div>
         </div>
-
     );
 };
 

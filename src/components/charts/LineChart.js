@@ -1,28 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
-const LineGraph = () => {
+const LineGraph = ({ data }) => {
     const chartRef = useRef();
-    const [data, setData] = useState([]);
 
-    useEffect(() => {
-        fetchData();
-    }, []);
-    const API = "https://admindashboard-backend-2.onrender.com";
-    const fetchData = async () => {
-        try {
-            const response = await fetch(`${API}/filterData?rel=`);
-            if (!response) {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-            }
-            const jsonData = await response.json();
-            setData(jsonData);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
 
     useEffect(() => {
         drawGraph();

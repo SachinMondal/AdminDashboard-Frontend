@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IconButton, Menu, MenuItem } from '@mui/material';
+import { IconButton, Menu, MenuItem, CircularProgress } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import CircularBarPlot from '../charts/CircularBarPlot';
 import SectorCheckbox from './CheckBox';
@@ -9,6 +9,7 @@ const CountryData = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [countries, setCountries] = useState([]);
     const [fetchedData, setFetchedData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true); // New state for loading indicator
     const open = Boolean(anchorEl);
 
     const handleClick = (event) => {
@@ -22,6 +23,7 @@ const CountryData = () => {
     const API = "https://admindashboard-backend-2.onrender.com";
 
     const fetchDataFromAPI = async () => {
+        setIsLoading(true); // Set loading to true when fetching data
         try {
             const response = await fetch(`${API}/filterData?country=`);
             if (!response.ok) {
@@ -29,18 +31,17 @@ const CountryData = () => {
             }
             const data = await response.json();
             const uniqueCountries = [...new Set(data.map(item => item.country))].filter(country => country);
-            return { countries: uniqueCountries, data };
+            setCountries(uniqueCountries); // Update countries
+            setFetchedData(data); // Update fetched data
         } catch (error) {
             console.error('Error fetching data:', error);
-            return { countries: [], data: [] };
+        } finally {
+            setIsLoading(false); // Set loading to false after fetching data
         }
     };
 
     useEffect(() => {
-        fetchDataFromAPI().then(({ countries, data }) => {
-            setCountries(countries);
-            setFetchedData(data);
-        });
+        fetchDataFromAPI();
     }, []);
 
     return (
@@ -79,17 +80,23 @@ const CountryData = () => {
             <div className='w-full flex justify-between items-center flex-wrap lg:flex-nowrap'>
                 <h2 className='text-gray-500 text-2xl font-bold text-left ms-2'>Select Country</h2>
                 <div className='w-[30rem] h-[22rem] m-6 overflow-x-hidden overflow-y-auto'>
-                    {countries.map((country) => (
-                        <div key={country} className="flex items-center">
-                            <SectorCheckbox
-                                key={country}
-                                sector={country}
-                                value={country}
-                                selectedSector={selectedCountry}
-                                handleSectorChange={() => setSelectedCountry(country)}
-                            />
+                    {isLoading ? (
+                        <div className="flex justify-center items-center w-full h-full">
+                            <CircularProgress />
                         </div>
-                    ))}
+                    ) : (
+                        countries.map((country) => (
+                            <div key={country} className="flex items-center">
+                                <SectorCheckbox
+                                    key={country}
+                                    sector={country}
+                                    value={country}
+                                    selectedSector={selectedCountry}
+                                    handleSectorChange={() => setSelectedCountry(country)}
+                                />
+                            </div>
+                        ))
+                    )}
                 </div>
                 <div className='lg:me-[3rem] m-auto'>
                     <CircularBarPlot selectedCountry={selectedCountry} data={fetchedData} />
