@@ -15,23 +15,23 @@ const BarChart = ({ sector, topic, data }) => {
 
     const drawChart = () => {
         d3.select(chartRef.current).selectAll("*").remove();
-        // Find the index of the bar to highlight
+
         let highlightIndex = -1;
         if (sector && !topic) {
-            // Show sector wise only
+
             highlightIndex = data.findIndex(item => item.sector === sector);
         } else if (!sector && topic) {
-            // Show topic wise only
+
             highlightIndex = data.findIndex(item => item.topic === topic);
         } else if (sector && topic) {
-            // Show both sector and topic
+
             // eslint-disable-next-line no-unused-vars
             highlightIndex = data.findIndex(item => item.sector === sector && item.topic === topic);
         }
 
 
 
-        // Set up dimensions for the chart
+
         const width = 800;
         const height = 300;
         const margin = { top: 20, right: 20, bottom: 10, left: 40 };

@@ -29,6 +29,7 @@ const YearData = () => {
 
     useEffect(() => {
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleClick = (event) => {
@@ -43,7 +44,6 @@ const YearData = () => {
         const startYearCounts = {};
         data.forEach(item => {
             const startYear = item.start_year;
-            // Check if start year is not null and not an empty string
             if (startYear !== null && startYear !== '') {
                 startYearCounts[startYear] = startYearCounts[startYear] ? startYearCounts[startYear] + 1 : 1;
             }
@@ -51,14 +51,12 @@ const YearData = () => {
         return startYearCounts;
     };
 
-
-
     const handleYearChange = (selectedYear) => {
         setSelectedYear(selectedYear);
     };
 
     return (
-        <>
+        <div className="w-full overflow-hidden relative">
             <div className='h-[2rem] w-full flex m-2 justify-between items-center'>
                 <div>
                     <h2 className='text-gray-500 text-xl font-semibold text-left'>Start Year</h2>
@@ -82,6 +80,17 @@ const YearData = () => {
                         anchorEl={anchorEl}
                         open={open}
                         onClose={handleClose}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'right',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        getContentAnchorEl={null}
+                        elevation={0}
+
                     >
                         <MenuItem key="1" onClick={handleClose}>View</MenuItem>
                         <MenuItem key="2" onClick={handleClose}>Link</MenuItem>
@@ -92,8 +101,8 @@ const YearData = () => {
             {loading ? (
                 <div className='flex justify-center items-center'>Loading...</div>
             ) : (
-                <div className='flex h-[18rem] w-full m-3'>
-                    <div className=' w-1/3 h-[16rem] m-3 overflow-x-hidden overflow-y-auto'>
+                <div className='flex flex-col md:flex-row'>
+                    <div className='w-full md:w-1/3 h-[20rem] overflow-x-hidden overflow-y-auto m-3'>
                         {Object.keys(yearsData).map(year => (
                             <div key={year}>
                                 <SectorCheckbox
@@ -105,12 +114,12 @@ const YearData = () => {
                             </div>
                         ))}
                     </div>
-                    <div className='w-2/3 h-full'>
+                    <div className='w-full md:w-2/3 h-[16rem] flex justify-center'>
                         <PieChart selectedYear={selectedYear} yearData={yearsData} />
                     </div>
                 </div>
             )}
-        </>
+        </div>
     );
 };
 

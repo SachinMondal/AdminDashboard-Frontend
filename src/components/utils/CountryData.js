@@ -28,7 +28,6 @@ const CountryData = () => {
                 throw new Error('Failed to fetch data');
             }
             const data = await response.json();
-            // Filter out null or empty country values and extract unique countries
             const uniqueCountries = [...new Set(data.map(item => item.country))].filter(country => country);
             return { countries: uniqueCountries, data };
         } catch (error) {
@@ -45,7 +44,7 @@ const CountryData = () => {
     }, []);
 
     return (
-        <div className='flex border border-gray-500 h-[30rem] w-full m-3 rounded-lg p-3 flex-wrap'>
+        <div className='flex border border-gray-500 h-[50rem] w-full lg:m-3 rounded-lg flex-wrap lg:h-[30rem] '>
             <div className='h-[2rem] w-full flex m-2 justify-between items-center'>
                 <div>
                     <h2 className='text-gray-500 text-xl font-semibold text-left'>Country Tracker</h2>
@@ -77,8 +76,8 @@ const CountryData = () => {
                     </Menu>
                 </div>
             </div>
-            <div className='w-full flex justify-between items-center text-wrap'>
-                <h2 className='text-gray-500 text-2xl font-bold text-left h-full'>Select Country</h2>
+            <div className='w-full flex justify-between items-center flex-wrap lg:flex-nowrap'>
+                <h2 className='text-gray-500 text-2xl font-bold text-left ms-2'>Select Country</h2>
                 <div className='w-[30rem] h-[22rem] m-6 overflow-x-hidden overflow-y-auto'>
                     {countries.map((country) => (
                         <div key={country} className="flex items-center">
@@ -92,7 +91,7 @@ const CountryData = () => {
                         </div>
                     ))}
                 </div>
-                <div className='me-[3rem]'>
+                <div className='lg:me-[3rem] m-auto'>
                     <CircularBarPlot selectedCountry={selectedCountry} data={fetchedData} />
                 </div>
             </div>

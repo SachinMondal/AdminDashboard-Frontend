@@ -19,18 +19,18 @@ const Main = () => {
 
 
     return (
-        <div>
-            <div className='flex '>
+        <div className='overflow-hidden overflow-x-hidden'>
+            <div className='flex flex-wrap m-2 lg:flex-nowrap lg:m-0'>
 
-                <div className='flex border h-[15rem] w-[40rem] m-3 rounded-lg'  >
+                <div className='flex border h-[15rem] w-full rounded-lg lg:w-[40rem] lg:m-3'  >
                     <Crousel />
                 </div>
 
-                <div className='flex border border-gray-500 h-[15rem] w-[20rem] m-3 rounded-3 rounded-lg' >
+                <div className='flex border border-gray-500 h-[15rem] w-full rounded-lg mt-2 mb-2 lg:w-[20rem] lg:m-3' >
                     <Sales />
                 </div>
 
-                <div className='flex border border-gray-500 h-[15rem] w-[20rem] m-3 rounded-3 rounded-lg flex-wrap ' >
+                <div className='flex border border-gray-500 h-[15rem] w-full rounded-lg lg:w-[20rem] lg:m-3 flex-wrap' >
                     <RelevanceData />
                 </div>
 
@@ -38,15 +38,15 @@ const Main = () => {
 
 
 
-            <div className='flex'>
+            <div className='flex flex-wrap m-3 lg:m-0 lg:flex-nowrap'>
 
-                <div className='flex border border-gray-500 h-[23rem] w-[40rem] m-3 flex-wrap rounded-lg'>
+                <div className='flex border border-gray-500 h-[26rem]  w-full flex-wrap rounded-lg mt-2 mb-2 lg:w-[40rem] lg:m-3'>
                     <IntensityData />
                 </div>
 
 
 
-                <div className='flex border border-gray-500 h-[23rem] w-[40rem] m-3 rounded-lg flex-wrap' >
+                <div className='flex border border-gray-500 h-[40rem] lg:h-[26rem] w-full rounded-lg flex-wrap mt-2 mb-2 lg:w-[40rem] lg:m-3' >
                     <YearData />
                 </div>
 
@@ -55,14 +55,14 @@ const Main = () => {
 
 
 
-            <div className='flex'>
+            <div className='flex flex-wrap m-3 lg:m-0 lg:flex-nowrap'>
                 <RegionData />
             </div>
 
 
 
 
-            <div className='flex'>
+            <div className='flex flex-wrap m-3 lg:m-0 lg:flex-nowrap'>
                 <CountryData />
             </div>
 

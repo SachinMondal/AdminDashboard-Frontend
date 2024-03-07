@@ -90,18 +90,18 @@ const IntensityData = () => {
 
                 </div>
             </div>
-            <div className="flex h-[10rem] w-full m-1 justify-between">
-                <div className='w-1/4'>
+            <div className="flex h-[10rem] w-full m-1 justify-between flex-wrap">
+                <div className='h-[2rem] w-full lg:w-1/4'>
                     <h1 className='text-left text-gray-600 font-extrabold text-[2rem] m-2'>1k</h1>
-                    <h6 className='text-center text-gray-500 text-sm'>You informed about the intensity of the datas</h6>
+                    <h6 className='text-center text-gray-500 lg:text-sm sm:text-xs'>You informed about the intensity of the datas</h6>
                 </div>
-                <div className='h-full w-3/4 m-1 overflow-x-auto overflow-y-hidden'>
+                <div className='h-full w-[20rem] mb-2 overflow-x-auto overflow-y-hidden lg:w-[29rem]'>
                     <SimpleLineGraph data={data} />
                 </div>
             </div>
-            <div className="flex border border-gray-500 h-[8rem] w-full ms-4 me-4 rounded-lg justify-evenly items-center p-2 overflow-x-auto overflow-y-hidden">
+            <div className="flex border border-gray-500 h-[8rem] w-full ms-4 me-4 rounded-lg justify-evenly items-center p-2 overflow-x-auto overflow-y-hidden mt-8">
                 {Object.entries(intensityOccurrences).map(([intensity, count]) => (
-                    <div className='h-[rem] w-1/3 p-3' key={intensity}>
+                    <div className='h-[rem] lg:w-1/3 p-3 w-[8rem]' key={intensity}>
                         <div className='flex h-[2rem] w-full'>
                             <Box className="bg-blue-400 w-[1.5rem] h-[1.5rem] rounded-lg">
                                 <h3 className='text-blue-700 font-extrabold text-sm'>$</h3>

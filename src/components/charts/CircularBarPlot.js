@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
 const CircularBarPlot = ({ selectedCountry, data }) => {
-
     const chartRef = useRef();
 
     useEffect(() => {
@@ -25,8 +24,8 @@ const CircularBarPlot = ({ selectedCountry, data }) => {
         const countryData = Object.entries(countryMap).map(([country, count]) => ({ country, count }));
 
         // Set up dimensions for the chart
-        const width = 400;
-        const height = 400;
+        const width = 300;
+        const height = 300;
         const radius = Math.min(width, height) / 2;
 
         // Create SVG element
@@ -55,17 +54,17 @@ const CircularBarPlot = ({ selectedCountry, data }) => {
             .attr('fill', d => d.country === selectedCountry ? 'green' : 'steelblue')
             .on('mouseover', (event, d) => {
                 // Show tooltip on mouseover
-                tooltip.style('left', `${event.pageX}px`)
-                    .style('top', `${event.pageY}px`)
-                    .style('opacity', 1)
-                    .html(`<strong>${d.country}</strong>: ${d.count}`);
+                tooltip.style('opacity', 1)
+                    .html(`<strong>${d.country}</strong>: ${d.count}`)
+                    .style('left', `${event.pageX}px`)
+                    .style('top', `${event.pageY}px`);
             })
             .on('mouseout', () => {
                 // Hide tooltip on mouseout
                 tooltip.style('opacity', 0);
             });
 
-        const tooltip = d3.select('body')
+        const tooltip = d3.select(chartRef.current)
             .append('div')
             .attr('class', 'tooltip')
             .style('opacity', 0)
@@ -73,9 +72,7 @@ const CircularBarPlot = ({ selectedCountry, data }) => {
             .style('background-color', 'white')
             .style('border', '1px solid #ddd')
             .style('border-radius', '5px')
-            .style('padding', '10px')
-            .style('top', 0) // Set initial top position to 0
-            .style('left', 0);
+            .style('padding', '10px');
     };
 
     return (

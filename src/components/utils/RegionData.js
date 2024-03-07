@@ -33,7 +33,7 @@ const RegionData = () => {
             } catch (error) {
                 console.error('Error fetching data:', error);
             } finally {
-                setLoading(false); // Set loading to false when data fetching is complete
+                setLoading(false);
             }
         };
 
@@ -41,11 +41,11 @@ const RegionData = () => {
     }, [selectedSector, selectedTopic]);
 
     useEffect(() => {
-        // Extract unique sectors from data and filter out null values
+
         const uniqueSectors = [...new Set(data.map(item => item.sector))].filter(sector => sector !== null);
         setSectors(uniqueSectors);
 
-        // Filter out null values for each specific sector and create arrays of unique topics
+
         const topics = {};
         uniqueSectors.forEach(sector => {
             const topicsForSector = [...new Set(data.filter(item => item.sector === sector && item.topic).map(item => item.topic))];
@@ -60,8 +60,8 @@ const RegionData = () => {
     };
 
     return (
-        <div className='flex border border-gray-500 h-[25rem] w-full m-3 rounded-lg'>
-            <div className='h-[2rem] w-full flex m-2 items-center flex-wrap'>
+        <div className='flex border border-gray-500 h-[50rem] lg:h-[25rem] w-full lg:m-3 rounded-lg flex-wrap lg:flex-nowrap lg:w-full'>
+            <div className='h-[2rem] w-full flex m-2 items-center flex-wrap lg:w-1/3'>
                 <div>
                     <h2 className='text-gray-500 text-xl font-semibold text-left'>Earning Reports</h2>
                     <h6 className='text-gray-500 text-sm text-left'>Weekly Earning Overview</h6>
@@ -74,7 +74,7 @@ const RegionData = () => {
                         <div>
                             <h4 className='text-left text-gray-700 text-sm ms-3'>Select Sector:</h4>
                             {/* Filters */}
-                            <div className='grid grid-cols-2 gap-2 w-full overflow-x-hidden overflow-y-auto h-[7rem]'>
+                            <div className='grid grid-cols-2 gap-2 w-full overflow-x-hidden overflow-y-auto max-h-[7rem]'>
                                 {loading ? (
                                     <p>Loading...</p>
                                 ) : (
@@ -94,7 +94,7 @@ const RegionData = () => {
                             <>
                                 <div className=' h-[9rem] overflow-x-hidden overflow-y-auto'>
                                     <h4 className='text-left text-gray-700 text-sm ms-3'>Select Topic:</h4>
-                                    <div className='grid grid-cols-2 gap-2 w-full overflow-x-auto'>
+                                    <div className='grid grid-cols-2 gap-2 w-full max-h-[9rem] overflow-x-auto'>
                                         {loading ? (
                                             <p>Loading...</p>
                                         ) : (
@@ -115,11 +115,12 @@ const RegionData = () => {
                     </div>
                 </div>
             </div>
-            <div className=''>
-                {/* Pass selected filters as props to BarChart */}
+            <div className='mt-[22rem] lg:mt-0 w-full overflow-x-auto'>
+
                 <BarChart sector={selectedSector} topic={selectedTopic} data={data} />
             </div>
         </div>
+
     );
 };
 
