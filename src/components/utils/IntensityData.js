@@ -94,45 +94,47 @@ const IntensityData = () => {
 
                 </div>
             </div>
-            {isLoading ? (
-                <div className="flex justify-center items-center w-full h-full">
-                    <CircularProgress />
-                </div>
-            ) : (
-                <>
-                    <div className="flex h-[10rem] w-full m-1 justify-between flex-wrap">
-                        <div className='h-[2rem] w-full lg:w-1/4'>
-                            <h1 className='text-left text-gray-600 font-extrabold text-[2rem] m-1'>1k</h1>
-                            <h6 className='text-center text-gray-500 lg:text-sm sm:text-xs'>You informed about the intensity of the datas</h6>
-                        </div>
-                        <div className='h-full w-[23rem] mt-3 mb-2 overflow-x-auto overflow-y-hidden lg:w-[29rem] border border-red-500'>
-                            <SimpleLineGraph data={data} />
-                        </div>
-                    </div>
-                    <div className="flex border border-gray-500 h-[8rem] w-full ms-4 me-4 rounded-lg justify-evenly items-center p-2 overflow-x-scroll overflow-y-hidden mt-8">
-                        {Object.entries(intensityOccurrences).map(([intensity, count]) => (
-                            <div className='h-[rem] lg:w-1/3 p-3 w-[8rem]' key={intensity}>
-                                <div className='flex h-[2rem] w-full'>
-                                    <Box className="bg-blue-400 w-[1.5rem] h-[1.5rem] rounded-lg">
-                                        <h3 className='text-blue-700 font-extrabold text-sm'>$</h3>
-                                    </Box>
-                                    <h4 className='text-gray-500 text-md font-bold ms-2'>Intensity:{intensity} </h4>
-                                </div>
-                                <div>
-                                    <h1 className='text-gray-800 text-xl text-left font-bold'>
-                                        {count}
-                                    </h1>
-                                </div>
-                                <div className="border border-blue-500 mt-2 rounded-lg h-[0.5rem] w-full relative">
-                                    <div className='bg-blue-500 absolute h-[0.5rem] rounded-lg' style={{ width: `${(count / maxCount) * 100}%` }}></div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
 
-                </>
-            )
-            }
+
+            <div className="flex h-[10rem] w-full m-1 justify-between flex-wrap">
+                <div className='h-[2rem] w-full lg:w-1/4'>
+                    <h1 className='text-left text-gray-600 font-extrabold text-[2rem] m-1'>1k</h1>
+                    <h6 className='text-center text-gray-500 lg:text-sm sm:text-xs'>You informed about the intensity of the datas</h6>
+                </div>
+                {isLoading ? (
+                    <div className="flex justify-center items-center w-full h-[8rem]">
+                        <CircularProgress />
+                    </div>
+                ) : (
+                    <div className='h-full w-[22rem] mt-3 mb-2 overflow-x-auto overflow-y-hidden lg:w-[29rem]'>
+                        <SimpleLineGraph data={data} />
+                    </div>
+                )}
+            </div>
+
+            <div className="flex border border-gray-500 h-[8rem] w-full ms-4 me-4 rounded-lg justify-evenly items-center p-2 overflow-x-auto overflow-y-hidden mt-8">
+                {Object.entries(intensityOccurrences).map(([intensity, count]) => (
+                    <div className='lg:w-1/3 p-3 w-[8rem]' key={intensity}>
+                        <div className='flex h-[2rem] w-full'>
+                            <Box className="bg-blue-400 w-[1.5rem] h-[1.5rem] rounded-lg">
+                                <h3 className='text-blue-700 font-extrabold text-sm'>$</h3>
+                            </Box>
+                            <h4 className='text-gray-500 text-md font-bold ms-2'>Intensity:{intensity} </h4>
+                        </div>
+                        <div>
+                            <h1 className='text-gray-800 text-xl text-left font-bold'>
+                                {count}
+                            </h1>
+                        </div>
+                        <div className="border border-blue-500 mt-2 rounded-lg h-[0.5rem] w-full relative">
+                            <div className='bg-blue-500 absolute h-[0.5rem] rounded-lg' style={{ width: `${(count / maxCount) * 100}%` }}></div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+
+
 
         </>
     )
