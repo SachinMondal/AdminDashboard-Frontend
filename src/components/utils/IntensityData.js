@@ -105,11 +105,11 @@ const IntensityData = () => {
                             <h1 className='text-left text-gray-600 font-extrabold text-[2rem] m-1'>1k</h1>
                             <h6 className='text-center text-gray-500 lg:text-sm sm:text-xs'>You informed about the intensity of the datas</h6>
                         </div>
-                        <div className='h-full w-[24rem] mb-2 mt-3 overflow-x-auto overflow-y-hidden lg:w-[29rem] scroll'>
+                        <div className='h-full w-[23rem] mt-3 mb-2 overflow-x-auto overflow-y-hidden lg:w-[29rem] border border-red-500'>
                             <SimpleLineGraph data={data} />
                         </div>
                     </div>
-                    <div className="flex border border-gray-500 h-[8rem] w-full ms-4 me-4 rounded-lg justify-evenly items-center p-2 overflow-x-auto overflow-y-hidden mt-8">
+                    <div className="flex border border-gray-500 h-[8rem] w-full ms-4 me-4 rounded-lg justify-evenly items-center p-2 overflow-x-scroll overflow-y-hidden mt-8">
                         {Object.entries(intensityOccurrences).map(([intensity, count]) => (
                             <div className='h-[rem] lg:w-1/3 p-3 w-[8rem]' key={intensity}>
                                 <div className='flex h-[2rem] w-full'>
