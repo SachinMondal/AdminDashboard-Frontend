@@ -7,7 +7,7 @@ const IntensityData = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [data, setData] = useState([]);
     const [intensityOccurrences, setIntensityOccurrences] = useState({});
-    const [maxCount, setMaxCount] = useState(0); // State to hold the maximum count
+    const [maxCount, setMaxCount] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
     const open = Boolean(anchorEl);
 
@@ -18,7 +18,7 @@ const IntensityData = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
-    const API = "https://admindashboard-backend-2.onrender.com";
+    const API = "http://localhost:5000";
     useEffect(() => {
         setIsLoading(true);
         const fetchData = async () => {
@@ -95,23 +95,23 @@ const IntensityData = () => {
                 </div>
             </div>
 
-
-            <div className="flex h-[10rem] w-full m-1 justify-between flex-wrap">
-                <div className='h-[2rem] w-full lg:w-1/4'>
-                    <h1 className='text-left text-gray-600 font-extrabold text-[2rem] m-1'>1k</h1>
-                    <h6 className='text-center text-gray-500 lg:text-sm sm:text-xs'>You informed about the intensity of the datas</h6>
+            {isLoading ? (
+                <div className="flex justify-center items-center w-full h-[8rem]">
+                    <CircularProgress />
                 </div>
-                {isLoading ? (
-                    <div className="flex justify-center items-center w-full h-[8rem]">
-                        <CircularProgress />
+            ) : (
+                <div className="flex h-[10rem] w-full m-1 justify-evenly flex-wrap">
+                    <div className='h-[2rem] w-full lg:w-1/4'>
+                        <h1 className='text-left text-gray-600 font-extrabold text-[2rem] m-1'>1k</h1>
+                        <h6 className='text-center text-gray-500 lg:text-sm sm:text-xs'>You informed about the intensity of the datas</h6>
                     </div>
-                ) : (
+
                     <div className='h-full w-[22rem] mt-3 mb-2 overflow-x-auto overflow-y-hidden lg:w-[29rem]'>
                         <SimpleLineGraph data={data} />
                     </div>
-                )}
-            </div>
 
+                </div>
+            )}
             <div className="flex border border-gray-500 h-[8rem] w-full ms-4 me-4 rounded-lg justify-evenly items-center p-2 overflow-x-auto overflow-y-hidden mt-8">
                 {Object.entries(intensityOccurrences).map(([intensity, count]) => (
                     <div className='lg:w-1/3 p-3 w-[8rem]' key={intensity}>

@@ -11,17 +11,9 @@ const CircularBarPlot = ({ selectedCountry, data }) => {
 
     const drawChart = (data) => {
         d3.select(chartRef.current).selectAll("*").remove();
-        // Count occurrences of each country
-        const countryMap = {};
-        data.forEach(item => {
-            const country = item.country;
-            if (country) {
-                countryMap[country] = (countryMap[country] || 0) + 1;
-            }
-        });
 
-        // Convert countryMap to array of objects for D3 data binding
-        const countryData = Object.entries(countryMap).map(([country, count]) => ({ country, count }));
+        // Convert countryDictionary to an array of objects for D3 data binding
+        const countryData = Object.entries(data).map(([country, count]) => ({ country, count }));
 
         // Set up dimensions for the chart
         const width = 300;
@@ -39,18 +31,18 @@ const CircularBarPlot = ({ selectedCountry, data }) => {
         // Define the scale for the circular bar plot
         const scale = d3.scaleLinear()
             .domain([0, d3.max(countryData, d => d.count)])
-            .range([0, radius]); // Adjust the range based on the radius
+            .range([0, radius]);
 
         // Create bars
         svg.selectAll('rect')
             .data(countryData)
             .enter()
             .append('rect')
-            .attr('x', -5) // Shift the bars slightly inward
-            .attr('y', -radius) // Start at the top
-            .attr('width', 10) // Width of the bars
-            .attr('height', d => scale(d.count)) // Height proportional to the data value
-            .attr('transform', (_d, i) => `rotate(${(i * 360) / countryData.length})`) // Rotate each bar
+            .attr('x', -5)
+            .attr('y', -radius)
+            .attr('width', 10)
+            .attr('height', d => scale(d.count))
+            .attr('transform', (_d, i) => `rotate(${(i * 360) / countryData.length})`)
             .attr('fill', d => d.country === selectedCountry ? 'green' : 'steelblue')
             .on('mouseover', (event, d) => {
                 // Show tooltip on mouseover
@@ -74,6 +66,7 @@ const CircularBarPlot = ({ selectedCountry, data }) => {
             .style('border-radius', '5px')
             .style('padding', '10px');
     };
+
 
     return (
         <div ref={chartRef}></div>

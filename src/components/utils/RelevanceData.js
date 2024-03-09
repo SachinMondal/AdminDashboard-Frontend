@@ -4,9 +4,9 @@ import LineChart from '../charts/LineChart';
 import { CircularProgress } from '@mui/material';
 
 const RelevanceData = () => {
-    const [loading, setLoading] = useState(true); // New state for loading indicator
-    const [data, setData] = useState([]); // State to hold the fetched data
-    const API = "https://admindashboard-backend-2.onrender.com";
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
+    const API = "http://localhost:5000";
 
     const fetchData = async () => {
         try {

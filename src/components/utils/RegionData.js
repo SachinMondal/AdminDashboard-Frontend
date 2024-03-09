@@ -10,11 +10,11 @@ const RegionData = () => {
     const [topicsBySector, setTopicsBySector] = useState({});
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
-    const API = "https://admindashboard-backend-2.onrender.com";
+    const API = "http://localhost:5000";
 
     useEffect(() => {
         const fetchData = async () => {
-            setLoading(true); // Set loading to true when fetching data
+            setLoading(true);
             try {
                 const url = `${API}/filterData?`;
                 const params = [];
@@ -35,7 +35,7 @@ const RegionData = () => {
             } catch (error) {
                 console.error('Error fetching data:', error);
             } finally {
-                setLoading(false); // Set loading to false after fetching data
+                setLoading(false);
             }
         };
 
@@ -63,8 +63,8 @@ const RegionData = () => {
         <div className='flex border border-gray-500 h-[50rem] lg:h-[25rem] w-full lg:m-3 rounded-lg flex-wrap lg:flex-nowrap lg:w-full'>
             <div className='h-[2rem] w-full flex m-2 items-center flex-wrap lg:w-1/3'>
                 <div>
-                    <h2 className='text-gray-500 text-xl font-semibold text-left'>Earning Reports</h2>
-                    <h6 className='text-gray-500 text-sm text-left'>Weekly Earning Overview</h6>
+                    <h2 className='text-gray-500 text-xl font-semibold text-left'>Sector Reports</h2>
+                    <h6 className='text-gray-500 text-sm text-left'>Sector wise & Topic wise Overview</h6>
                 </div>
 
                 <div className='h-[2rem] w-full m-2'>
@@ -91,26 +91,26 @@ const RegionData = () => {
                             </div>
                         </div>
                         {selectedSector && (
-                            <>
-                                <div className=' h-[9rem] overflow-x-hidden overflow-y-auto'>
-                                    <h4 className='text-left text-gray-700 text-sm ms-3'>Select Topic:</h4>
-                                    <div className='grid grid-cols-2 gap-2 w-full max-h-[9rem] overflow-x-auto'>
-                                        {loading ? (
-                                            <p>Loading...</p>
-                                        ) : (
-                                            topicsBySector[selectedSector].map(topic => (
-                                                <SectorCheckbox
-                                                    key={topic}
-                                                    sector={topic}
-                                                    value={topic}
-                                                    selectedSector={selectedTopic}
-                                                    handleSectorChange={() => setSelectedTopic(topic)}
-                                                />
-                                            ))
-                                        )}
-                                    </div>
+
+                            <div className=' h-[9rem]'>
+                                <h4 className='text-left text-gray-700 text-sm ms-3'>Select Topic:</h4>
+                                <div className='grid grid-cols-2 gap-2 w-full max-h-[9rem] overflow-x-auto'>
+                                    {loading ? (
+                                        <p>Loading...</p>
+                                    ) : (
+                                        topicsBySector[selectedSector].map(topic => (
+                                            <SectorCheckbox
+                                                key={topic}
+                                                sector={topic}
+                                                value={topic}
+                                                selectedSector={selectedTopic}
+                                                handleSectorChange={() => setSelectedTopic(topic)}
+                                            />
+                                        ))
+                                    )}
                                 </div>
-                            </>
+                            </div>
+
                         )}
                     </div>
                 </div>

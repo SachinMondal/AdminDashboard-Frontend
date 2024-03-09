@@ -62,7 +62,7 @@ const PieChart = ({ selectedYear, yearData }) => {
             .attr('fill', (d, i) => color(i))
             .attr('stroke', 'white')
             .style('stroke-width', '2px')
-            .style('opacity', d => selectedYear ? (d.data.label === selectedYear ? 1 : 0.5) : 1) // Adjust opacity based on selectedYear
+            .style('opacity', d => selectedYear ? (d.data.label === selectedYear ? 1 : 0.5) : 1)
             // Add tooltip interaction
             .on("mouseover", function (event, d) {
                 tooltip.transition()
@@ -87,14 +87,14 @@ const PieChart = ({ selectedYear, yearData }) => {
             const highlightArc = d3.arc()
                 .innerRadius(radius)
                 .outerRadius(radius)
-                .cornerRadius(10); // Add corner radius for a smoother cut-out
+                .cornerRadius(10);
 
             svg.append('path')
                 .attr('d', highlightArc(arcs.find(d => d.data.label === selectedYear)))
-                .attr('fill', '#ffffff') // Use white color to make it look like a cut-out
-                .attr('stroke', '#ffffff') // Hide the stroke
+                .attr('fill', '#ffffff')
+                .attr('stroke', '#ffffff')
                 .style('stroke-width', '2px')
-                .attr('pointer-events', 'none'); // Disable pointer events to allow interaction with underlying chart
+                .attr('pointer-events', 'none');
         }
     };
 

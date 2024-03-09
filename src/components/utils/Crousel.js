@@ -34,10 +34,10 @@ const Carousel = () => {
 
     useEffect(() => {
         const handleResize = () => {
-            setIsSmallScreen(window.innerWidth < 768); // Adjust the breakpoint as needed
+            setIsSmallScreen(window.innerWidth < 768);
         };
 
-        handleResize(); // Set initial screen size
+        handleResize();
         window.addEventListener('resize', handleResize);
 
         const intervalId = setInterval(() => {

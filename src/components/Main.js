@@ -19,7 +19,7 @@ const Main = () => {
 
 
     return (
-        <div className='overflow-hidden overflow-x-hidden'>
+        <div className='overflow-hidden'>
             <div className='flex flex-wrap m-2 lg:flex-nowrap lg:m-0'>
 
                 <div className='flex border h-[15rem] w-full rounded-lg lg:w-1/2 lg:m-3'  >
