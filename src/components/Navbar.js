@@ -151,7 +151,7 @@ export default function Navbar() {
                 </IconButton>
                 <p>Notifications</p>
             </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen}>
+            <MenuItem>
                 <IconButton
                     size="large"
                     aria-label="account of current user"
@@ -248,10 +248,10 @@ export default function Navbar() {
                             aria-label="account of current user"
                             aria-controls={menuId}
                             aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
+
                             color="inherit"
                         >
-                            <AccountCircle />
+                            <AccountCircle onClick={handleProfileMenuOpen} />
                         </IconButton>
                     </Box>
                     <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
@@ -260,10 +260,10 @@ export default function Navbar() {
                             aria-label="show more"
                             aria-controls={mobileMenuId}
                             aria-haspopup="true"
-                            onClick={handleMobileMenuOpen}
+
                             color="inherit"
                         >
-                            <MoreIcon />
+                            <MoreIcon onClick={handleMobileMenuOpen} />
                         </IconButton>
                     </Box>
                 </Toolbar>

@@ -3,36 +3,19 @@ import { CircularProgress, IconButton, Menu, MenuItem } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import PieChart from '../charts/PieChart';
 import SectorCheckbox from './CheckBox';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchingYearData } from '../../state/YearState/action';
 
 const YearData = () => {
     const [anchorEl, setAnchorEl] = useState(null);
-    const [yearsData, setYearsData] = useState({});
     const [selectedYear, setSelectedYear] = useState('');
-    const [loading, setLoading] = useState(true);
     const open = Boolean(anchorEl);
-    const API = "https://admindashboard-backend-2.onrender.com";
-
-    const fetchData = async () => {
-        try {
-            const response = await fetch(`${API}/filterData?startYear=`);
-            if (!response.ok) {
-                throw new Error('Failed to fetch data');
-            }
-            const jsonData = await response.json();
-            const filteredData = jsonData.filter(item => item.start_year !== null);
-            const processedData = processData(filteredData);
-            setYearsData(processedData);
-            setLoading(false);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            setLoading(false);
-        }
-    };
+    const dispatch = useDispatch();
+    const data = useSelector((store) => store.year);
 
     useEffect(() => {
-        fetchData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+        dispatch(fetchingYearData({ selectedYear }));
+    }, [selectedYear, dispatch]);;
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -42,16 +25,6 @@ const YearData = () => {
         setAnchorEl(null);
     };
 
-    const processData = (data) => {
-        const startYearCounts = {};
-        data.forEach(item => {
-            const startYear = item.start_year;
-            if (startYear !== null && startYear !== '') {
-                startYearCounts[startYear] = startYearCounts[startYear] ? startYearCounts[startYear] + 1 : 1;
-            }
-        });
-        return startYearCounts;
-    };
 
     const handleYearChange = (selectedYear) => {
         setSelectedYear(selectedYear);
@@ -99,14 +72,14 @@ const YearData = () => {
                     </Menu>
                 </div>
             </div>
-            {loading ? (
+            {data.loading ? (
                 <div className="flex justify-center items-center w-full h-full">
                     <CircularProgress />
                 </div>
             ) : (
                 <div className='flex flex-col md:flex-row'>
                     <div className='w-full md:w-1/3 h-[20rem] overflow-x-hidden overflow-y-auto m-3'>
-                        {Object.keys(yearsData).map(year => (
+                        {Object.keys(data.yearData).map(year => (
                             <div key={year}>
                                 <SectorCheckbox
                                     sector={year}
@@ -118,7 +91,7 @@ const YearData = () => {
                         ))}
                     </div>
                     <div className='w-full md:w-2/3 h-[16rem] flex justify-center'>
-                        <PieChart selectedYear={selectedYear} yearData={yearsData} />
+                        <PieChart selectedYear={selectedYear} yearData={data.yearData} />
                     </div>
                 </div>
             )}

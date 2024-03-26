@@ -1,31 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import CasesOutlinedIcon from '@mui/icons-material/CasesOutlined';
 import LineChart from '../charts/LineChart';
 import { CircularProgress } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchRelevanceData } from '../../state/RelevanceData/action';
 
 const RelevanceData = () => {
-    const [loading, setLoading] = useState(true);
-    const [data, setData] = useState([]);
-    const API = "http://localhost:5000";
-
-    const fetchData = async () => {
-        try {
-            const response = await fetch(`${API}/filterData?rel=`);
-            if (!response.ok) {
-                throw new Error('Failed to fetch data');
-            }
-            const jsonData = await response.json();
-            setData(jsonData);
-            setLoading(false);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            setLoading(false);
-        }
-    };
+    const dispatch = useDispatch();
+    const data = useSelector((store) => store.relevance)
 
     useEffect(() => {
-        fetchData();
-    }, []);
+        dispatch(fetchRelevanceData());
+    }, [dispatch]);
 
     return (
         <>
@@ -39,12 +25,12 @@ const RelevanceData = () => {
                 </div>
             </div>
             <div className='h-[6rem] w-full m-3 overflow-y-hidden overflow-x-auto'>
-                {loading ? (
+                {data.loading ? (
                     <div className="flex justify-center items-center w-full h-full">
                         <CircularProgress />
                     </div>
                 ) : (
-                    <LineChart data={data} />
+                    <LineChart data={data.relevanceData} />
                 )}
             </div>
         </>

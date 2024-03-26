@@ -44,15 +44,25 @@ const CircularBarPlot = ({ selectedCountry, data }) => {
             .attr('height', d => scale(d.count))
             .attr('transform', (_d, i) => `rotate(${(i * 360) / countryData.length})`)
             .attr('fill', d => d.country === selectedCountry ? 'green' : 'steelblue')
-            .on('mouseover', (event, d) => {
-                // Show tooltip on mouseover
+            .attr('scale', d => d.country === selectedCountry ? 1.5 : 1)
+            .on('mouseover', function (event, d) {
+                // Increase scale on mouseover
+                d3.select(this)
+                    .transition()
+                    .duration(200)
+
                 tooltip.style('opacity', 1)
                     .html(`<strong>${d.country}</strong>: ${d.count}`)
                     .style('left', `${event.pageX}px`)
                     .style('top', `${event.pageY}px`);
             })
-            .on('mouseout', () => {
-                // Hide tooltip on mouseout
+            .on('mouseout', function () {
+                d3.select(this)
+                    .transition()
+                    .duration(200)
+
+
+
                 tooltip.style('opacity', 0);
             });
 
@@ -64,6 +74,7 @@ const CircularBarPlot = ({ selectedCountry, data }) => {
             .style('background-color', 'white')
             .style('border', '1px solid #ddd')
             .style('border-radius', '5px')
+            .style('cursor', 'pointer')
             .style('padding', '10px');
     };
 

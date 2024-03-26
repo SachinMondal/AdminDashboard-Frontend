@@ -32,7 +32,7 @@ const BarChart = ({ sector, topic, data }) => {
 
 
 
-        const width = 1080;
+        const width = 750;
         const height = 300;
         const margin = { top: 20, right: 20, bottom: 10, left: 40 };
 

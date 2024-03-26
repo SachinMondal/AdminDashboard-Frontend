@@ -5,7 +5,7 @@ const SimpleLineGraph = ({ data }) => {
     const chartRef = useRef();
     useEffect(() => {
         d3.select(chartRef.current).selectAll("*").remove();
-        const margin = { top: 0.5, right: 20, bottom: 20, left: 20 };
+        const margin = { top: 0.5, right: 90, bottom: 20, left: 20 };
         const width = 7000 - margin.left - margin.right;
         const height = 150 - margin.top - margin.bottom;
 
